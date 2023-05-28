@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Posts.css'
-import { PostsData } from '../../data/PostsData'
 import Post from '../post/Post'
+import { useDispatch, useSelector } from 'react-redux'
+import { getTimelinePosts } from '../../redux/actions/postAction'
 
 function Posts () {
+
+  const dispatch = useDispatch()
+  const user = useSelector(state => state.auth.userAuthData)
+  const {posts, loading} = useSelector(state => state.post)
+
+  useEffect(() => {
+    dispatch(getTimelinePosts(user._id))
+  }, [])
+
   return (
     <div className="Posts">
-        {PostsData.map((post, id)=>{
-            return <Post data={post} id={id}/>
+        {loading ? 'Loading...' : posts.map((post, id)=>{
+            return <Post data={post} key={id} id={id}/>
         })}
     </div>
   )

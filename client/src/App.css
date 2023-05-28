@@ -30,7 +30,7 @@
   filter: blur(70px);
 }
 
-.button{
+.button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,13 +41,18 @@
   transition: 100ms ease-out;
 }
 
-.button:hover{
+.button:hover {
   cursor: pointer;
   color: var(--orange);
   background: transparent;
   border: 2px solid var(--orange);
 }
 
-::-webkit-scrollbar{
+.button:disabled {
+  background: silver;
+  pointer-events: none;
+}
+
+::-webkit-scrollbar {
   display: none;
 }

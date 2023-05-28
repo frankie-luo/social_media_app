@@ -10,4 +10,4 @@ router.route('/favorites/:id').put(PostController.likePost)
 
 router.route('/timelines/:id').get(PostController.getTimelinePosts)
 
-module.exports(router)
+module.exports = router

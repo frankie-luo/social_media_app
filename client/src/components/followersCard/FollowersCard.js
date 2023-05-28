@@ -1,29 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './FollowersCard.css'
 import { Followers } from '../../data/FollowersData'
+import UserCard from '../userCard/UserCard'
+import { useSelector } from 'react-redux'
+import axios from 'axios'
 
 const FollowersCard = () => {
-  return (
-    <div className="FollowersCard">
-        <h3>Who is following you</h3>
+    
+    const [people, setPeople] = useState([])
+    const user = useSelector(state => state.auth.userAuthData)
 
-        {Followers.map((follower) =>
-            (
-                <div className="follower" key={follower.username}>
-                    <div>
-                        <img src={follower.img} alt="" className='followerImage' />
-                        <div className="name">
-                            <span>{follower.name}</span>
-                            <span>@{follower.username}</span>
-                        </div>
-                    </div>
-                    <button className='button fc-button'>
-                        Follow
-                    </button>
-                </div>
-            )
-        )}
-    </div>
+    useEffect(() => {
+        axios.get('http://localhost:3001/users').then(res => setPeople(res.data.filter(i => i._id != user._id))).catch(error => console.log(error))
+    }, [])
+
+    return (
+        <div className="FollowersCard">
+            <h3>People you may know</h3>
+
+            {people.map(person =>
+                (
+                    <UserCard person={person} key={person._id} />
+                )
+            )}
+        </div>
   )
 }
 
